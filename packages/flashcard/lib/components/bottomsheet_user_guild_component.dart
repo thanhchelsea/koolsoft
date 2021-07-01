@@ -31,7 +31,7 @@ class BottomSheetUserGuildCustom extends StatelessWidget {
                       color: Colors.black,
                     )),
                 TextSpan(
-                    text: title,
+                    text: description,
                     style: TextStyle(
                       height: 1.5,
                       fontSize: 15,
