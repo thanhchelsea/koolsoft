@@ -10,70 +10,13 @@ class FlashcardController extends GetxController {
   RxList<FlashCardModel> listHocLai = <FlashCardModel>[].obs;
   final listDataOld = <FlashCardModel>[].obs;
   RxList<FlashCardModel> listData = <FlashCardModel>[
-    // new FlashCardModel(
-    //     word: "Viet Nam",
-    //     define: 'Nước cộng hoà xã hội chủ nghĩa Việt Nam! <3'),
-    // new FlashCardModel(word: "Chelsea", define: 'to quoc viet nam',image: "https://thietbidoandoi.com/wp-content/uploads/2021/03/la-co-to-quoc.png"),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-    // new FlashCardModel(word: "Chelsea", define: 'football club'),
-    // new FlashCardModel(word: "ManU", define: 'losser'),
-    // new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
-    // new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
-
+    new FlashCardModel(
+        word: "Viet Nam",
+        define: 'Nước cộng hoà xã hội chủ nghĩa Việt Nam! <3'),
+    new FlashCardModel(word: "Chelsea", define: 'to quoc viet nam',image: "https://thietbidoandoi.com/wp-content/uploads/2021/03/la-co-to-quoc.png"),
+    new FlashCardModel(word: "ManU", define: 'losser'),
+    new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
+    new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
   ].obs;
   RxList<FlashCardModel> listCardRemoved = <FlashCardModel>[].obs;
   Rx<Color> understood = Colors.white.obs;
@@ -88,15 +31,35 @@ class FlashcardController extends GetxController {
   RxBool isShowShowWordOnFontCard = true.obs;
   Rx<TCardController> tCardcontroller = TCardController().obs;
   var cardKeys = Map<int, GlobalKey<FlipCardState>>();
+  RxList<Widget> data=<Widget>[].obs;
 
 
+  List<Widget> createCard(){
+    return List.generate(
+      listData.length,
+          (index) {
+        cardKeys.putIfAbsent(
+          index,
+              () => GlobalKey<FlipCardState>(
+            debugLabel: index.toString(),
+          ),
+        );
+        GlobalKey<FlipCardState>? thisCard =
+        cardKeys[index];
+        return Container(
+          child: ItemCard(index, thisCard),
+        );
+      },
+    );
+  }
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    for(int i=0;i<60;i++){
-      listData.value.add(new FlashCardModel(word: "Chelsea", define: 'to quoc viet nam',image: "https://thietbidoandoi.com/wp-content/uploads/2021/03/la-co-to-quoc.png"));
-    }
+    // for(int i=0;i<60;i++){
+    //   listData.value.add(new FlashCardModel(word: "Chelsea", define: 'to quoc viet nam',image: "https://thietbidoandoi.com/wp-content/uploads/2021/03/la-co-to-quoc.png"));
+    // }
+    data.value = createCard();
   }
   @override
   void onReady() {
@@ -114,38 +77,10 @@ class FlashcardController extends GetxController {
     if (value) {
       listData.value.shuffle();
       tCardcontroller.value.reset(
-          cards: List.generate(
-        listData.length,
-        (index) {
-          cardKeys.putIfAbsent(
-            index,
-            () => GlobalKey<FlipCardState>(
-              debugLabel: index.toString(),
-            ),
-          );
-          GlobalKey<FlipCardState>? thisCard = cardKeys[index];
-          return Container(
-            child: ItemCard(index, thisCard),
-          );
-        },
-      ).toList());
+          cards: createCard().toList());
     } else {
       tCardcontroller.value.reset(
-          cards: List.generate(
-        listData.length,
-        (index) {
-          cardKeys.putIfAbsent(
-            index,
-            () => GlobalKey<FlipCardState>(
-              debugLabel: index.toString(),
-            ),
-          );
-          GlobalKey<FlipCardState>? thisCard = cardKeys[index];
-          return Container(
-            child: ItemCard(index, thisCard),
-          );
-        },
-      ).toList());
+          cards: createCard().toList());
     }
     update();
   }
@@ -183,21 +118,7 @@ class FlashcardController extends GetxController {
     listData.value = [];
     listData.value.addAll(listDataOld);
     tCardcontroller.value.reset(
-        cards: List.generate(
-      listData.length,
-      (index) {
-        cardKeys.putIfAbsent(
-          index,
-          () => GlobalKey<FlipCardState>(
-            debugLabel: index.toString(),
-          ),
-        );
-        GlobalKey<FlipCardState>? thisCard = cardKeys[index];
-        return Container(
-          child: ItemCard(index, thisCard),
-        );
-      },
-    ).toList());
+        cards: createCard().toList());
     update();
   }
 
@@ -208,21 +129,7 @@ class FlashcardController extends GetxController {
     listData.value = listHocLai.value;
     listHocLai.value = [];
     tCardcontroller.value.reset(
-        cards: List.generate(
-      listData.length,
-      (index) {
-        cardKeys.putIfAbsent(
-          index,
-          () => GlobalKey<FlipCardState>(
-            debugLabel: index.toString(),
-          ),
-        );
-        GlobalKey<FlipCardState>? thisCard = cardKeys[index];
-        return Container(
-          child: ItemCard(index, thisCard),
-        );
-      },
-    ).toList());
+        cards: createCard().toList());
     update();
   }
 

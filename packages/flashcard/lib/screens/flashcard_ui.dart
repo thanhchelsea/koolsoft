@@ -9,6 +9,7 @@ import 'package:flashcard/utils/client_utils.dart';
 import 'package:flashcard/utils/image_app.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'flashcard_binding.dart';
 
@@ -40,7 +41,6 @@ class _FlashcardAnimationState extends State<FlashcardAnimation> {
   FlashcardController controllerFlashcard =
       Get.put<FlashcardController>(FlashcardController());
   List<Widget> cards = <Widget>[];
-  List<Widget>? data;
   GlobalKey<FlipCardState>? thisCard;
   Timer? timer;
   @override
@@ -112,29 +112,13 @@ class _FlashcardAnimationState extends State<FlashcardAnimation> {
   }
 
   Widget bodyScreen(BuildContext context) {
-    data = List.generate(
-      controllerFlashcard.listData.length,
-      (index) {
-        controllerFlashcard.cardKeys.putIfAbsent(
-          index,
-          () => GlobalKey<FlipCardState>(
-            debugLabel: index.toString(),
-          ),
-        );
-        GlobalKey<FlipCardState>? thisCard =
-            controllerFlashcard.cardKeys[index];
-        return Container(
-          child: ItemCard(index, thisCard),
-        );
-      },
-    );
     return GetBuilder<FlashcardController>(
       builder: (controller) {
         return Expanded(
             child: Container(
           alignment: Alignment.bottomCenter,
           child: TCard(
-            cards: data ?? [],
+            cards: controller.data,
             size: Size(ClientUtils.getDeviceWidth(context) * 0.9,
                 ClientUtils.getHeightDevice(context) * 0.7),
             controller: controller.tCardcontroller.value,
@@ -521,60 +505,71 @@ class ItemCard extends StatelessWidget {
                 ),
                 child: Container(
                   alignment: Alignment.centerLeft,
-                  child: Column(
+                  child: Stack(
                     children: [
-                      controller.indexCard.value == index &&
-                              controller.statusUser.value !=
-                                  StatusUser.reading &&
-                              controller.isShowStatusCard.value
-                          ? Container(
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
-                              decoration: BoxDecoration(
-                                color: controller.understood.value,
-                              ),
-                              child: Text(
-                                controller.statusUser.value ==
-                                        StatusUser.understood
-                                    ? "Hiểu rồi"
-                                    : controller.statusUser.value ==
-                                            StatusUser.learnAgain
-                                        ? "Học lại"
-                                        : "",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: controller.statusUser.value ==
-                                          StatusUser.understood
-                                      ? Colors.white
-                                      : Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
-                          : Container(),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          alignment: Alignment.centerLeft,
-                          child: controller.listData[index].image == null
-                              ? AutoSizeText(
-                                  controller.isShowShowWordOnFontCard.value
-                                      ? controller.listData[index].word
-                                      : controller.listData[index].define,
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(fontSize: 40),
+                      Column(
+                        children: [
+                          controller.statusUser.value != StatusUser.reading &&
+                                  controller.isShowStatusCard.value
+                              ? Container(
+                                  width: double.infinity,
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: controller.understood.value,
+                                  ),
+                                  child: Text(
+                                    controller.statusUser.value ==
+                                            StatusUser.understood
+                                        ? "Hiểu rồi"
+                                        : controller.statusUser.value ==
+                                                StatusUser.learnAgain
+                                            ? "Học lại"
+                                            : "",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: controller.statusUser.value ==
+                                              StatusUser.understood
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 )
-                              : Image(
-                                  image: NetworkImage(controller
-                                      .listData[index].image
-                                      .toString()),
-                                ),
-                        ),
+                              : Container(),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 16),
+                              alignment: Alignment.centerLeft,
+                              child: controller.listData[index].image == null
+                                  ? AutoSizeText(
+                                      controller.isShowShowWordOnFontCard.value
+                                          ? controller.listData[index].word
+                                          : controller.listData[index].define,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(fontSize: 40),
+                                    )
+                                  : Image(
+                                      image: NetworkImage(
+                                        controller.listData[index].image
+                                            .toString(),
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ],
                       ),
+                      Positioned(
+                        bottom: 20,
+                        left: 20,
+                        child: Icon(
+                          FontAwesomeIcons.volumeUp,
+                          size: 25,
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -595,52 +590,64 @@ class ItemCard extends StatelessWidget {
               ),
               child: Container(
                 alignment: Alignment.centerLeft,
-                child: Column(
+                child: Stack(
                   children: [
-                    controller.statusUser.value != StatusUser.reading &&
-                            controller.isShowStatusCard.value
-                        ? Container(
-                            width: double.infinity,
-                            alignment: Alignment.center,
+                    Column(
+                      children: [
+                        controller.statusUser.value != StatusUser.reading &&
+                                controller.isShowStatusCard.value
+                            ? Container(
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: controller.understood.value,
+                                ),
+                                child: Text(
+                                  controller.statusUser.value ==
+                                          StatusUser.understood
+                                      ? "Hiểu rồi"
+                                      : controller.statusUser.value ==
+                                              StatusUser.learnAgain
+                                          ? "Học lại"
+                                          : "",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: controller.statusUser.value ==
+                                            StatusUser.understood
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        Expanded(
+                          child: Container(
                             padding: EdgeInsets.symmetric(
-                              vertical: 16,
+                                horizontal: 16, vertical: 16),
+                            alignment: Alignment.centerLeft,
+                            child: AutoSizeText(
+                              !controller.isShowShowWordOnFontCard.value
+                                  ? controller.listData[index].word
+                                  : controller.listData[index].define,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(fontSize: 40),
                             ),
-                            decoration: BoxDecoration(
-                              color: controller.understood.value,
-                            ),
-                            child: Text(
-                              controller.statusUser.value ==
-                                      StatusUser.understood
-                                  ? "Hiểu rồi"
-                                  : controller.statusUser.value ==
-                                          StatusUser.learnAgain
-                                      ? "Học lại"
-                                      : "",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: controller.statusUser.value ==
-                                        StatusUser.understood
-                                    ? Colors.white
-                                    : Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        : Container(),
-                    Expanded(
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                        alignment: Alignment.centerLeft,
-                        child: AutoSizeText(
-                          !controller.isShowShowWordOnFontCard.value
-                              ? controller.listData[index].word
-                              : controller.listData[index].define,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 40),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
+                    Positioned(
+                      bottom: 20,
+                      left: 20,
+                      child: Icon(
+                        FontAwesomeIcons.volumeUp,
+                        size: 25,
+                      ),
+                    )
                   ],
                 ),
               ),
