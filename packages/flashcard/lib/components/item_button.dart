@@ -15,7 +15,8 @@ class _ItemButtonCustomState extends State<ItemButtonCustom> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      focusColor: Colors.white,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: () {
         widget.onTap();
       },

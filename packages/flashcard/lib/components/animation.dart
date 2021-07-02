@@ -116,6 +116,7 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
   late AnimationController _cardReverseController;
   late Animation<Alignment> _reboundAnimation;
   late AnimationController _reboundController;
+  bool isBacking = false;
   Widget _frontCard(BoxConstraints constraints) {
     Widget child =
         _frontCardIndex < _cards.length ? _cards[_frontCardIndex] : Container();
@@ -284,17 +285,28 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
   get runChangeOrderAnimation => _runChangeOrderAnimation;
 
   void _runReverseOrderAnimation() {
+    setState(() {
+      isBacking = true;
+    });
     if (_isAnimating()) {
       return;
     }
 
     if (_frontCardIndex == 0) {
+      // khong co quay ve
       _swipInfoList.clear();
+      setState(() {
+        isBacking = false;
+      });
       return;
     }
 
     _cardReverseController.reset();
-    _cardReverseController.forward();
+    _cardReverseController.forward().whenComplete(() {
+      setState(() {
+        isBacking = false;
+      });
+    });
   }
 
   get runReverseOrderAnimation => _runReverseOrderAnimation;
@@ -446,22 +458,25 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
           return Stack(
             children: <Widget>[
               RotationTransition(
-                turns: AlwaysStoppedAnimation(10 / 360),
+                turns: AlwaysStoppedAnimation(8 / 360),
                 child: _backCard(constraints),
               ),
-              RotationTransition(
-                turns: AlwaysStoppedAnimation(-8 / 360),
-                child: _middleCard(constraints),
+              GestureDetector(
+                onTap: null,
+                child: RotationTransition(
+                  turns: AlwaysStoppedAnimation(-8 / 360),
+                  child: _middleCard(constraints),
+                ),
               ),
               _frontCard(constraints),
-              _cardChangeController.status != AnimationStatus.forward
+              isBacking == false &&
+                      _cardChangeController.status != AnimationStatus.forward
                   ? SizedBox.expand(
                       child: GestureDetector(
                         onPanDown: (DragDownDetails details) {
                           _stop();
                         },
                         onPanUpdate: (DragUpdateDetails details) {
-                          //  print(details.delta.dx.toString()+" dmdmd");
                           if (widget.updateMove != null) {
                             widget.updateMove!(details);
                           }

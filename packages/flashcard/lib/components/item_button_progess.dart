@@ -21,7 +21,7 @@ class ItemButtonProgess extends StatelessWidget {
         children: [
           Expanded(
             child: InkWell(
-              splashColor: Colors.transparent,
+              splashColor: Colors.red,
               onTap: () {
                 onTap();
               },

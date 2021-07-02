@@ -57,7 +57,8 @@ class _FlashcardAnimationState extends State<FlashcardAnimation> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           width: ClientUtils.getDeviceWidth(context),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,14 +72,19 @@ class _FlashcardAnimationState extends State<FlashcardAnimation> {
                                   color: Colors.black,
                                 ),
                               ),
-                              IconButton(
-                                  onPressed: () {
+                              Container(
+                                // color: Colors.red,
+                                child: InkWell(
+                                  //padding: EdgeInsets.all(0),
+                                  onTap: () {
                                     Get.bottomSheet(
                                       BottomSheetUserGuildCustom(),
                                       isScrollControlled: true,
                                     );
                                   },
-                                  icon: Icon(Icons.help))
+                                  child: Icon(Icons.help),
+                                ),
+                              )
                             ],
                           ),
                         )
@@ -115,52 +121,53 @@ class _FlashcardAnimationState extends State<FlashcardAnimation> {
     return GetBuilder<FlashcardController>(
       builder: (controller) {
         return Expanded(
-            child: Container(
-          alignment: Alignment.bottomCenter,
-          child: TCard(
-            cards: controller.data,
-            size: Size(ClientUtils.getDeviceWidth(context) * 0.9,
-                ClientUtils.getHeightDevice(context) * 0.7),
-            controller: controller.tCardcontroller.value,
-            onForward: (index, info) {
-              if (info.direction == SwipDirection.Right) {
-                controller.changColorAndStatus(StatusUser.understood);
-                controller.nextCard(index);
-                controller.increaseUnderstood();
-              }
-              if (info.direction == SwipDirection.Left) {
-                controller.changColorAndStatus(StatusUser.learnAgain);
-                controller.nextCard(index);
-                controller.increaseLearnAgain(index);
-              }
-              if (info.direction == SwipDirection.None) {
+          child: Container(
+            alignment: Alignment.bottomCenter,
+            child: TCard(
+              cards: controller.data,
+              size: Size(ClientUtils.getDeviceWidth(context) * 0.9,
+                  ClientUtils.getHeightDevice(context) * 0.7),
+              controller: controller.tCardcontroller.value,
+              onForward: (index, info) {
+                if (info.direction == SwipDirection.Right) {
+                  controller.changColorAndStatus(StatusUser.understood);
+                  controller.nextCard(index);
+                  controller.increaseUnderstood();
+                }
+                if (info.direction == SwipDirection.Left) {
+                  controller.changColorAndStatus(StatusUser.learnAgain);
+                  controller.nextCard(index);
+                  controller.increaseLearnAgain(index);
+                }
+                if (info.direction == SwipDirection.None) {
+                  controller.changColorAndStatus(StatusUser.reading);
+                }
                 controller.changColorAndStatus(StatusUser.reading);
-              }
-              controller.changColorAndStatus(StatusUser.reading);
-            },
-            onBack: (index, info) {
-              controller.nextCard(controller.indexCard.value - 1);
-              if (info.direction == SwipDirection.Right) {
-                controllerFlashcard.decrementCountUnderstood();
-              }
-              if (info.direction == SwipDirection.Left) {
-                controllerFlashcard.decrementCountLearnAgain();
-              }
-            },
-            onEnd: () {},
-            onDragEnd: () {
-              controller.changColorAndStatus(StatusUser.reading);
-            },
-            updateMove: (details) {
-              if (details.delta.dx < 0) {
-                controller.changColorAndStatus(StatusUser.learnAgain);
-              }
-              if (details.delta.dx > 0) {
-                controller.changColorAndStatus(StatusUser.understood);
-              }
-            },
+              },
+              onBack: (index, info) {
+                controller.nextCard(controller.indexCard.value - 1);
+                if (info.direction == SwipDirection.Right) {
+                  controllerFlashcard.decrementCountUnderstood();
+                }
+                if (info.direction == SwipDirection.Left) {
+                  controllerFlashcard.decrementCountLearnAgain();
+                }
+              },
+              onEnd: () {},
+              onDragEnd: () {
+                controller.changColorAndStatus(StatusUser.reading);
+              },
+              updateMove: (details) {
+                if (details.delta.dx < 0) {
+                  controller.changColorAndStatus(StatusUser.learnAgain);
+                }
+                if (details.delta.dx > 0) {
+                  controller.changColorAndStatus(StatusUser.understood);
+                }
+              },
+            ),
           ),
-        ));
+        );
       },
     );
   }
@@ -432,7 +439,7 @@ class _FlashcardAnimationState extends State<FlashcardAnimation> {
                         ),
                       ),
                       Text(
-                        "Tiếp tục ôn luyện để nắm vững thuật ngữ còn lại ${controller.listHocLai.length}.",
+                        "Tiếp tục ôn luyện để nắm vững ${controller.listHocLai.length} thuật ngữ còn lại.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
@@ -509,7 +516,9 @@ class ItemCard extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          controller.statusUser.value != StatusUser.reading &&
+                          controller.indexCard.value == index &&
+                                  controller.statusUser.value !=
+                                      StatusUser.reading &&
                                   controller.isShowStatusCard.value
                               ? Container(
                                   width: double.infinity,
@@ -594,7 +603,9 @@ class ItemCard extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        controller.statusUser.value != StatusUser.reading &&
+                        controller.indexCard.value == index &&
+                                controller.statusUser.value !=
+                                    StatusUser.reading &&
                                 controller.isShowStatusCard.value
                             ? Container(
                                 width: double.infinity,

@@ -13,7 +13,11 @@ class FlashcardController extends GetxController {
     new FlashCardModel(
         word: "Viet Nam",
         define: 'Nước cộng hoà xã hội chủ nghĩa Việt Nam! <3'),
-    new FlashCardModel(word: "Chelsea", define: 'to quoc viet nam',image: "https://thietbidoandoi.com/wp-content/uploads/2021/03/la-co-to-quoc.png"),
+    new FlashCardModel(
+        word: "Chelsea",
+        define: 'to quoc viet nam',
+        image:
+            "https://thietbidoandoi.com/wp-content/uploads/2021/03/la-co-to-quoc.png"),
     new FlashCardModel(word: "ManU", define: 'losser'),
     new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
     new FlashCardModel(word: "Bac Ninh", define: 'Quan ho...'),
@@ -31,27 +35,26 @@ class FlashcardController extends GetxController {
   RxBool isShowShowWordOnFontCard = true.obs;
   Rx<TCardController> tCardcontroller = TCardController().obs;
   var cardKeys = Map<int, GlobalKey<FlipCardState>>();
-  RxList<Widget> data=<Widget>[].obs;
+  RxList<Widget> data = <Widget>[].obs;
 
-
-  List<Widget> createCard(){
+  List<Widget> createCard() {
     return List.generate(
       listData.length,
-          (index) {
+      (index) {
         cardKeys.putIfAbsent(
           index,
-              () => GlobalKey<FlipCardState>(
+          () => GlobalKey<FlipCardState>(
             debugLabel: index.toString(),
           ),
         );
-        GlobalKey<FlipCardState>? thisCard =
-        cardKeys[index];
+        GlobalKey<FlipCardState>? thisCard = cardKeys[index];
         return Container(
           child: ItemCard(index, thisCard),
         );
       },
     );
   }
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -61,11 +64,13 @@ class FlashcardController extends GetxController {
     // }
     data.value = createCard();
   }
+
   @override
   void onReady() {
     super.onReady();
     listDataOld.value = listData.value;
   }
+
 
   void shuffleDataCard(bool value) {
     listHocLai.value = [];
@@ -76,11 +81,9 @@ class FlashcardController extends GetxController {
     listData.value.addAll(listDataOld);
     if (value) {
       listData.value.shuffle();
-      tCardcontroller.value.reset(
-          cards: createCard().toList());
+      tCardcontroller.value.reset(cards: createCard().toList());
     } else {
-      tCardcontroller.value.reset(
-          cards: createCard().toList());
+      tCardcontroller.value.reset(cards: createCard().toList());
     }
     update();
   }
@@ -101,6 +104,7 @@ class FlashcardController extends GetxController {
   }
 
   void decrementCountLearnAgain() {
+    listHocLai.value.removeLast();
     countLearnAgain.value = countLearnAgain.value - 1;
     update();
   }
@@ -117,8 +121,7 @@ class FlashcardController extends GetxController {
     countLearnAgain.value = 0;
     listData.value = [];
     listData.value.addAll(listDataOld);
-    tCardcontroller.value.reset(
-        cards: createCard().toList());
+    tCardcontroller.value.reset(cards: createCard().toList());
     update();
   }
 
@@ -128,8 +131,7 @@ class FlashcardController extends GetxController {
     countLearnAgain.value = 0;
     listData.value = listHocLai.value;
     listHocLai.value = [];
-    tCardcontroller.value.reset(
-        cards: createCard().toList());
+    tCardcontroller.value.reset(cards: createCard().toList());
     update();
   }
 
