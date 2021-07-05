@@ -55,7 +55,8 @@ typedef ForwardCallback(int index, SwipInfo info);
 typedef BackCallback(int index, SwipInfo info);
 typedef EndCallback();
 
-typedef CardDragUpdateCallback = void Function(DragUpdateDetails details);
+typedef CardDragUpdateCallback = void Function(
+    DragUpdateDetails details, Alignment align);
 
 class TCard extends StatefulWidget {
   final Size size;
@@ -109,6 +110,7 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
 
   int _frontCardIndex = 0;
   int get frontCardIndex => _frontCardIndex;
+  Alignment frontCardAlign = Alignment(0, 0);
 
   Alignment _frontCardAlignment = CardAlignments.front;
   double _frontCardRotation = 0.0;
@@ -289,6 +291,9 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
       isBacking = true;
     });
     if (_isAnimating()) {
+      setState(() {
+        isBacking = false;
+      });
       return;
     }
 
@@ -325,6 +330,7 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
         _frontCardIndex >= _cards.length) {
       widget.onEnd!();
     }
+     frontCardAlign = Alignment(0, 0);
   }
 
   // Back animation callback
@@ -337,12 +343,14 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
       widget.onBack!(_frontCardIndex, info);
     }
     _swipInfoList.removeLast();
+    frontCardAlign = Alignment(0, 0);
   }
 
   void _resetFrontCard() {
     _frontCardRotation = 0.0;
     _frontCardAlignment = CardAlignments.front;
     setState(() {});
+    frontCardAlign = Alignment(0, 0);
   }
 
   void reset({List<Widget>? cards}) {
@@ -355,6 +363,7 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
     _swipInfoList.clear();
     _frontCardIndex = 0;
     _resetFrontCard();
+    frontCardAlign = Alignment(0, 0);
   }
 
   void _stop() {
@@ -477,8 +486,16 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
                           _stop();
                         },
                         onPanUpdate: (DragUpdateDetails details) {
+                          setState(() {
+                            frontCardAlign = new Alignment(
+                                frontCardAlign.x +
+                                    details.delta.dx *
+                                        20 /
+                                        MediaQuery.of(context).size.width,
+                                0);
+                          });
                           if (widget.updateMove != null) {
-                            widget.updateMove!(details);
+                            widget.updateMove!(details, frontCardAlign);
                           }
                           _updateFrontCardAlignment(details, size);
                         },

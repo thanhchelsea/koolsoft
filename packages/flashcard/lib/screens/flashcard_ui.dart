@@ -9,6 +9,7 @@ import 'package:flashcard/utils/client_utils.dart';
 import 'package:flashcard/utils/image_app.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'flashcard_binding.dart';
@@ -145,6 +146,7 @@ class _FlashcardAnimationState extends State<FlashcardAnimation> {
                 controller.changColorAndStatus(StatusUser.reading);
               },
               onBack: (index, info) {
+                controller.changColorAndStatus(StatusUser.reading);
                 controller.nextCard(controller.indexCard.value - 1);
                 if (info.direction == SwipDirection.Right) {
                   controllerFlashcard.decrementCountUnderstood();
@@ -157,11 +159,10 @@ class _FlashcardAnimationState extends State<FlashcardAnimation> {
               onDragEnd: () {
                 controller.changColorAndStatus(StatusUser.reading);
               },
-              updateMove: (details) {
-                if (details.delta.dx < 0) {
+              updateMove: (details, align) {
+                if (align.x < 0) {
                   controller.changColorAndStatus(StatusUser.learnAgain);
-                }
-                if (details.delta.dx > 0) {
+                } else {
                   controller.changColorAndStatus(StatusUser.understood);
                 }
               },

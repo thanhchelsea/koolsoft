@@ -59,8 +59,13 @@ class FlashcardController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    // for(int i=0;i<60;i++){
+    // for(int i=0;i<100;i++){
     //   listData.value.add(new FlashCardModel(word: "Chelsea", define: 'to quoc viet nam',image: "https://thietbidoandoi.com/wp-content/uploads/2021/03/la-co-to-quoc.png"));
+    //   listData.value.add(    new FlashCardModel(word: "Ha Noi", define: 'Mot tinh cua mien bac'),
+    //   );
+    //   listData.value.add(    new FlashCardModel(
+    //       word: "Viet Nam",
+    //       define: 'Nước cộng hoà xã hội chủ nghĩa Việt Nam! <3'),);
     // }
     data.value = createCard();
   }
