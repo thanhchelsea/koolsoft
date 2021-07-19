@@ -21,7 +21,7 @@ class FlashCardUi extends StatelessWidget {
       initialBinding: FlashcardBinding(),
       home: Scaffold(
         backgroundColor: Colors.lightBlue.withOpacity(0.03),
-        body: Container(
+        body: Container( //
           width: ClientUtils.getDeviceWidth(context),
           height: ClientUtils.getHeightDevice(context),
           child: FlashcardAnimation(),
