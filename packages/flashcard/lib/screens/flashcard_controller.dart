@@ -76,7 +76,6 @@ class FlashcardController extends GetxController {
     listDataOld.value = listData.value;
   }
 
-
   void shuffleDataCard(bool value) {
     listHocLai.value = [];
     indexCard.value = 0;

@@ -330,7 +330,7 @@ class TCardState extends State<TCard> with TickerProviderStateMixin {
         _frontCardIndex >= _cards.length) {
       widget.onEnd!();
     }
-     frontCardAlign = Alignment(0, 0);
+    frontCardAlign = Alignment(0, 0);
   }
 
   // Back animation callback
